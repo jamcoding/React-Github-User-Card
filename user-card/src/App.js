@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import UserCard from './components/UserCard'
+
+class App extends React.Component {
+  state = {
+    githubUsers: []
+  }
+
+  componentDidMount() {
+    fetch('https://api.github.com/users/jamcoding/followers')
+      .then(response => response.json())
+      .then(github => this.setState({ githubUsers: github }))
+      // .then(github => console.log('response', github))
+      .catch(error => console.log("error", error))
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {this.state.githubUsers.map(users => {
+          return <UserCard key={users.id} users={users} />
+        })}
+      </div>
+    )
+  }
 }
 
 export default App;

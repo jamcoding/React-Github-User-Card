@@ -18,9 +18,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {this.state.githubUsers.map(users => {
-          return <UserCard key={users.id} users={users} />
-        })}
+        <nav>
+          <input type="text" placeholder="Search for followers" />
+        </nav>
+        <div className="container">
+          {this.state.githubUsers.map(users => {
+            return <UserCard key={users.id} users={users} />
+          })}
+        </div>
       </div>
     )
   }
